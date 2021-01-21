@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[9]:
 
 
 import subprocess
@@ -11,32 +11,89 @@ import os
 import time
 import pytesseract
 from PIL import Image
-import numpy as np
-import numpy.ma as ma
 import fakeWebCam
+import webbrowser
+import config
 
-loginID = '725 405 7950'
-password = '140287'
-thresh = 5 #how many or more people have to leave in 5 seconds to trigger logout
-
-
-# In[ ]:
+pytesseract.pytesseract.tesseract_cmd = config.tesseract_path
 
 
+# In[13]:
+
+
+print('''\033[36m
+      /yyooooooooo++++++:-`
+      :+ssssssssshhhhhhdddd-
+                      -hddo
+                    `sdds.
+                   -hdh:
+                 `+dds`
+       ---------/hdd+ `.-.`        `--`    `.  .-.`  `.-.`          `:+++/-.          `-::::-`
+       /yhhhhhddddy.:yhhyhhs/`  .oyhhyhyo. /hyhhyhhoohhyhho.      .sddhhhdddy-     .ddddddddddo
+        ...-ydddh/`yho-   -shs`:hh/`  `/hh:/hh/` `ohho` `+hy.    oddy:    .hdd     -ddd:    .-`
+         .sdddh/` :hy       hh:yh/      /hy+hy    `hh+    yh:   /ddddhyyyysddy     -dds
+        :dddh/`   -hh-     -hh.ohs`    `sho/hs    `yh+    yh/   +ddo/+++++s+:`     :dd/
+       +ddddossssshdhhs+:+shy- `+hho//ohh+`/hs    .hh+    yh/   `hdd/`             sdd:
+       .sddddyooooo+`-/oso/-     `:+oo+/.  :o-     /o/    -o-    `+dddy+/:::/ss-   hdh`
+                                                                    -+shhdddhyo`   ydo
+                                                                                    `
+
+                       .-////:-.`                               .ss.
+                      -dddhhhddddho/`                           +dd.
+                      `ddo    `.:oddh`                          +dd.
+                      `ddo       `ydd.                          +dd.
+                      `ddo  `.-/oddh-                      /++++hdds+++++`
+                      `dddhddddddddy/`        .:++/-`      oyyyydddyyyyyy-
+                      `dddhs+:.--/ohddo`    -yddhddddy+.        hdh
+                      :ddo          /dds   :ddy-  `-+hddo       hdh
+                      /dd:           ydd   sdd`       /dd/     .ddo
+                      +dd-          /dd+   ydh:`    `:sdd/     .dd+
+                      hdd/---.```./yddo    .odddhhhhddds-      .dd+
+                      :shddddddddddds.        .:/+++:-         `/+`
+                          ``------.
+\033[0m''')
 print('logging into zoom')
-result = subprocess.run(['C:/Users/micha/AppData/Roaming/Zoom/bin/Zoom.exe'])
-time.sleep(0.5)
-joinButton = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/join.png', grayscale=True, confidence=0.9)
-pyautogui.click(joinButton)
-time.sleep(0.5)
-pyautogui.typewrite(loginID + '\n')
-time.sleep(1)
-pyautogui.typewrite(password + '\n')
-loginButton = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/login.png', grayscale=True, confidence=0.9)
-pyautogui.click(loginButton)
+
+if not config.loginID is None:
+    config.zoom_path = config.zoom_path.replace('\\', '/')
+    print(config.zoom_path)
+    try:
+        subprocess.run([config.zoom_path])
+    except:
+        print('Cannot find Zoom.exe')
+        print('Please make sure that zoom_path is correct!')
+        #sys.exit()
+    sys.exit()
+    time.sleep(0.5)
+    joinButton = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/join.png', grayscale=True, confidence=0.9)
+    pyautogui.click(joinButton)
+    time.sleep(0.5)
+    pyautogui.typewrite(config.loginID + '\n')
+    time.sleep(1)
+    pyautogui.typewrite(config.password + '\n')
+    loginButton = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/login.png', grayscale=True, confidence=0.9)
+    pyautogui.click(loginButton)
+    sys.exit()
+else:
+    try:
+        webbrowser.open(config.url)
+    except:
+        print('url or browser did not work')
+        sys.exit()
+    try:
+        time.sleep(1)
+        openZoom = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/openZoom.png', grayscale=True, confidence=0.9)
+        pyautogui.click(openZoom)
+    except:
+        try:
+            time.sleep(5)
+            openZoom = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/openZoom.png', grayscale=True, confidence=0.9)
+            pyautogui.click(openZoom)
+        except:
+            print('did not prompt to open zoom')
 
 bgFound = None
-while bgFound == None:
+while bgFound is None:
     bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=1)
     time.sleep(10)
 pyautogui.click(bgFound)
@@ -47,12 +104,19 @@ pyautogui.click(bgFound)
 
 def startVideo():
     try:
-        shell = get_ipython().__class__.__name__
-    x = threading.Thread(target=fakeWebCam.falseCam, args=(), daemon=True)
-    x.start()
+        get_ipython().__class__.__name__
+        from threading import Thread
+        print('Warning: you are using a shell. For better speed use the interpreter.')
+        x = Thread(target=fakeWebCam.falseCa, daemon=True)
+    else:
+        from multiprocessing import Process
+        x = Process(target=fakeWebCam.falseCam, daemon=True)
+    finally:
+        x.start()
+    
     time.sleep(3)
     video = pyautogui.locateOnScreen(os.getcwd() + '/assets/startVideo.png', grayscale=True, confidence=0.9)
-    if video == None:
+    if video is None:
         pyautogui.press('alt')
         video = pyautogui.locateOnScreen(os.getcwd() + '/assets/startVideo.png', grayscale=True, confidence=0.9)
     pyautogui.click(video[0] + video[2], video[1])
@@ -70,7 +134,7 @@ def breakout():
         #2. start loop to check for leave breakout
     breakout = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/breakoutJoin.png', grayscale=True, confidence=0.9)
     if breakout:
-        print('breakout')
+        print('entered breakout')
         pyautogui.click(breakout)
         while True():
             time.sleep(30)
@@ -79,7 +143,6 @@ def breakout():
                 pyautogui.click(leaveBreakout)
                 time.sleep(30)
                 return True
-    print('no breakout')
     return False
 
 
@@ -93,7 +156,7 @@ def userCount():
     #4. use tesseract to turn image to int
     #5. return int value of participants
     participantsLocation = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/participants.png', grayscale=True, confidence = 0.8)
-    if participantsLocation == None:
+    if participantsLocation is None:
         pyautogui.press('alt')
         participantsLocation = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/participants.png', grayscale=True, confidence = 0.8)
     people = pyautogui.screenshot()
@@ -118,7 +181,6 @@ def userCount():
     people = people.resize((300, 300), Image.BILINEAR)
     people.save(os.getcwd() + '/assets/cap.png')
     
-    pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
     text = pytesseract.image_to_string(img, lang='eng', config='--psm 7 digits')
     text = text[:text.index('\n')]
     return int(text)
@@ -131,7 +193,7 @@ def leave():
     #click leave and confirm leave
     print('leaving meeting')
     leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/leave.png', grayscale=True, confidence=0.9)
-    if leave == None:
+    if leave is None:
         pyautogui.press('alt')
         leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/leave.png', grayscale=True, confidence=0.9)
     pyautogui.click(leave)
@@ -151,10 +213,46 @@ if __name__ == '__main__':
             old = None
         count = userCount()
         print(count, 'users')
-        if old != None and old - count > thresh:
+        if old != None and old - count > config.thresh:
             print('Users leaving')
             leave()
         old = count
+
+
+# In[ ]:
+
+
+
+
+
+# In[73]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
