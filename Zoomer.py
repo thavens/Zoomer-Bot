@@ -13,7 +13,6 @@ import pytesseract
 from PIL import Image
 import numpy as np
 import numpy.ma as ma
-import math
 import fakeWebCam
 
 loginID = '725 405 7950'
@@ -156,49 +155,6 @@ if __name__ == '__main__':
             print('Users leaving')
             leave()
         old = count
-
-
-# In[11]:
-
-
-
-
-
-# In[73]:
-
-
-
-
-
-# In[158]:
-
-
-'''leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/viewOptions.png', grayscale=True, confidence = 0.9)
-pyautogui.click(leave)
-time.sleep(0.01)
-leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/requestRemoteControl.png', grayscale=True, confidence=0.9)
-pyautogui.click(leave)
-time.sleep(0.01)
-while True:
-    leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/request.png', grayscale=True, confidence=0.9)
-    if leave:
-        pyautogui.click(leave)'''
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-bgFound = None
-while bgFound == None:
-    bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=1)
-    time.sleep(10)
-pyautogui.click(bgFound)
 
 
 # In[ ]:
