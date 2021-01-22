@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[10]:
 
 
 import subprocess
@@ -13,12 +13,14 @@ import pytesseract
 from PIL import Image
 import fakeWebCam
 import webbrowser
+import numpy as np
+import numpy.ma as ma
 import config
 
 pytesseract.pytesseract.tesseract_cmd = config.tesseract_path
 
 
-# In[13]:
+# In[4]:
 
 
 print('''\033[36m
@@ -83,15 +85,20 @@ else:
     try:
         time.sleep(1)
         openZoom = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/openZoom.png', grayscale=True, confidence=0.9)
+        time.sleep(0.2)
         pyautogui.click(openZoom)
     except:
         try:
             time.sleep(5)
             openZoom = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/openZoom.png', grayscale=True, confidence=0.9)
+            time.sleep(0.2)
             pyautogui.click(openZoom)
         except:
             print('did not prompt to open zoom')
+    webbrowser.close()
 
+video = fakeWebCam()
+    
 bgFound = None
 while bgFound is None:
     bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=1)
@@ -107,10 +114,10 @@ def startVideo():
         get_ipython().__class__.__name__
         from threading import Thread
         print('Warning: you are using a shell. For better speed use the interpreter.')
-        x = Thread(target=fakeWebCam.falseCa, daemon=True)
-    else:
+        x = Thread(target=video.falseCam, daemon=True)
+    except:
         from multiprocessing import Process
-        x = Process(target=fakeWebCam.falseCam, daemon=True)
+        x = Process(target=video.falseCam, daemon=True)
     finally:
         x.start()
     
@@ -182,11 +189,12 @@ def userCount():
     people.save(os.getcwd() + '/assets/cap.png')
     
     text = pytesseract.image_to_string(img, lang='eng', config='--psm 7 digits')
-    text = text[:text.index('\n')]
+    #text = text[:text.index('\n')]
+    text = text.strip()
     return int(text)
 
 
-# In[8]:
+# In[5]:
 
 
 def leave():
@@ -201,11 +209,12 @@ def leave():
     pyautogui.click(leave)
 
 
-# In[10]:
+# In[13]:
 
 
 if __name__ == '__main__':
-    startVideo()
+    if config.webcam:
+        startVideo()
     old = None
     while True:
         time.sleep(5)
@@ -216,6 +225,7 @@ if __name__ == '__main__':
         if old != None and old - count > config.thresh:
             print('Users leaving')
             leave()
+            break
         old = count
 
 
@@ -225,7 +235,7 @@ if __name__ == '__main__':
 
 
 
-# In[73]:
+# In[ ]:
 
 
 
