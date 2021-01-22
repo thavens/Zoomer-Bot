@@ -1,6 +1,6 @@
 # Zoomer-Bot
 Bot to do your zoom class for you so you can sleep and still leave the meeting :)
-download either the py or ipynb (py should be faster and allows for multiprocessing (future))
+download either the py or ipynb (py should be faster and allows for multiprocessing)
 
 Current assets folder is 1440p. 1080p and 4k users make need to generate their own assets
   - just take screenshots of the same buttons as are in current assets folder and replace the 1440p images.
