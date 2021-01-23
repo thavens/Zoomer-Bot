@@ -124,7 +124,7 @@ def start(config):
     pytesseract.pytesseract.tesseract_cmd = config.tesseract_path
     #opening zoom and joining class
     print('logging into zoom')
-    '''
+
     if not config.loginID is None:
         config.zoom_path = config.zoom_path.replace('\\', '/')
         print(config.zoom_path)
@@ -160,7 +160,7 @@ def start(config):
     else:
         print('\033[31;1m# ERROR: no login ID or link was provided\033[0m')
         sys.exit()
-    '''
+    
     #bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.95)
     #while bgFound is None:
     #    print('locating')
