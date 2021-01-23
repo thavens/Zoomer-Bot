@@ -81,31 +81,28 @@ with open('timetable.txt') as f:
         elif 'link' in info:
             logins.append(line)
 
-time = datetime.now()
 
-closest = None
-for c in range(len(times)):
-    t = times[c] - datetime.now()
-    if closest is None or times[closest] - datetime.now() > t:
-        closest = c
-print('next class at:\u001b[33m', times[closest])
+while times:
+    closest = 0
+    for c in range(len(times)):
+        t = times[c] - datetime.now()
+        if times[closest] - datetime.now() > t:
+            closest = c
+    print('next class at:\u001b[33m', times[closest])
+    print('\u001b[0mwaiting for:', round((times[closest]-datetime.now()).total_seconds()/3600, 4), 'hr')
+    wait = (times[closest]-datetime.now()).total_seconds()/100
+    for i in range(100):
+        if wait < 0:
+            break
+        sleep.sleep(wait)
+        print('#', end='')
+    print('')
 
-
-
-print('\u001b[0mwaiting for:', round((times[closest]-datetime.now()).total_seconds()/3600, 4), 'hr')
-wait = (times[closest]-datetime.now()).total_seconds()/100
-for i in range(100):
-    if wait < 0:
-        break
-    sleep.sleep(wait)
-    print('#', end='')
-print('')
-
-if type(logins[closest]) is tuple:
-    config.loginID = logins[closest][0]
-    config.password = logins[closest][1]
-else:
-    config.url = logins[closest]
-Zoomer.start(config)
-times.remove(closest)
-logins.remove(closest)
+    if type(logins[closest]) is tuple:
+        config.loginID = logins[closest][0]
+        config.password = logins[closest][1]
+    else:
+        config.url = logins[closest]
+    Zoomer.start(config)
+    times.remove(closest)
+    logins.remove(closest)
