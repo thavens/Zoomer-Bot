@@ -2,15 +2,16 @@
 Bot to do your zoom class for you so you can sleep and still leave the meeting :)
 download either the py or ipynb (py should be faster and allows for multiprocessing)
 
-Current assets folder is 1440p. 1080p and 4k users make need to generate their own assets
+Current assets folder is 1440p. 1080p and 4k users will probably need to generate their own assets
   - just take screenshots of the same buttons as are in current assets folder and replace the 1440p images.
 
 required python libraries:
-pyautogui
-pytesseract
-PIL
-numpy
-fakeWebCam
+    pyautogui (pip install PyAutoGUI)
+    pytesseract (pip install pytesseract)
+    PIL (pip install Pillow)
+    numpy (pip install numpy)
+    pyvirtualcam (pip install pyvirtualcam)
+    cv2 (pip install opencv-python)
 
 other required programs:
 tesseract.exe download:

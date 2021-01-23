@@ -1,0 +1,17 @@
+use 24hr time. format m/d/y hr:min:sec. ie 1/22/2021 14:30:00
+
+class format:
+time: 
+id:
+passord:
+
+OR
+
+time:
+link:
+
+#####################################################
+time: 1/22/2021 20:18:00
+link: https://us02web.zoom.us/j/4949655895?pwd=bSswbE1rVyt4SUU2N0dvVHN5cmdzZz09
+time: 1/23/2021 12:15:00
+link: 

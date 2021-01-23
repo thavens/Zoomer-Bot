@@ -9,15 +9,15 @@ import webbrowser
 import numpy as np
 import numpy.ma as ma
 from fakeWebCam import Webcam
-#import cv2
 import pyvirtualcam
 from PIL import ImageFilter, ImageEnhance
+import win32gui
 
 def startVideo(config):
     x = None
     video = Webcam(config.video_file, config.webcam_downscale_factor)
     try:
-        get_ipython().__class__.__name__
+        #get_ipython().__class__.__name__
         from threading import Thread
         print('Warning: you are using a shell. For better speed use the interpreter.')
         x = Thread(target=video.false_cam, daemon=True)
@@ -86,7 +86,7 @@ def userCount():
     img = np.reshape(img, (30,30,3))
     img = img.astype(np.uint8)
     people = Image.fromarray(img)
-    people = people.resize((300, 300), Image.BILINEAR)
+    #people = people.resize((300, 300), Image.BICUBIC)
     #ret, thresh = cv2.threshold(np.asarray(people), 127, 255, cv2.THRESH_BINARY)
     #kernel = np.ones((3,3),np.uint8)
     #people = cv2.erode(thresh,kernel,iterations = 1)
@@ -100,6 +100,8 @@ def userCount():
         text = text.strip()
     except:
         print('could not convert to into. value:', text)
+
+    print('users:', text)
     return int(text)
 
 def leave():
@@ -112,6 +114,9 @@ def leave():
     pyautogui.click(leave)
     leave = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/leaveConfirm.png', grayscale=True, confidence=0.9)
     pyautogui.click(leave)
+
+def windowEnumerationHandler(hwnd, top_windows):
+    top_windows.append((hwnd, win32gui.GetWindowText(hwnd)))
 
 def start(config):
     print('id:', config.loginID)
@@ -156,12 +161,26 @@ def start(config):
         print('\033[31;1m# ERROR: no login ID or link was provided\033[0m')
         sys.exit()
     '''
-    bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.90)
-    while bgFound is None:
-        print('locating')
-        bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.90)
-        time.sleep(10)
-    pyautogui.click(bgFound)
+    #bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.95)
+    #while bgFound is None:
+    #    print('locating')
+    #    bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.95)
+    #    time.sleep(10)
+    #pyautogui.click(bgFound)
+
+    while True:
+        top_windows = []
+        win32gui.EnumWindows(windowEnumerationHandler, top_windows)
+        for i in top_windows:
+            if "zoom meeting" in i[1].lower():
+                print(i)
+                win32gui.ShowWindow(i[0],5)
+                win32gui.SetForegroundWindow(i[0])
+                break
+        else:
+            time.sleep(10)
+            continue
+        break
 
     #main loop
     ############################################################################

@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pyvirtualcam
 import numpy as np
 import cv2
@@ -32,13 +26,8 @@ class Webcam:
                     self.cam.sleep_until_next_frame()
             cap = cv2.VideoCapture(video_name)
 
-
-# In[3]:
-
-
-#'D:\Recordings\FaceRecording.mp4'
 if __name__ == "__main__":
     cam = Webcam()
-    cam.falseCam()
+    cam.false_cam()
     print('Your false webcam seems to be working.')
     print('If you want to make sure go ahead and test out the virtual cam in a test zoom meeting.')
