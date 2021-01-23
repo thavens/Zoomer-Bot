@@ -11,7 +11,7 @@ class Webcam:
         self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)//downscale_factor)
         self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)//downscale_factor)
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
-        self.cam = pyvirtualcam.Camera(width=self.width, height=self.height, fps=self.fps, delay=50)
+        self.cam = pyvirtualcam.Camera(width=self.width, height=self.height, fps=self.fps)
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 4)
 
     def false_cam(self):
@@ -28,6 +28,6 @@ class Webcam:
 
 if __name__ == "__main__":
     cam = Webcam()
-    cam.false_cam()
     print('Your false webcam seems to be working.')
     print('If you want to make sure go ahead and test out the virtual cam in a test zoom meeting.')
+    cam.false_cam()

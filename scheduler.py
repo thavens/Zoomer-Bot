@@ -95,13 +95,16 @@ while times:
         if wait < 0:
             break
         sleep.sleep(wait)
-        print('#', end='')
+        print('#', end='', flush=True)
     print('')
 
     if type(logins[closest]) is tuple:
         config.loginID = logins[closest][0]
         config.password = logins[closest][1]
+        config.url = None
     else:
+        config.loginID = None
+        config.password = None
         config.url = logins[closest]
     Zoomer.start(config)
     times.remove(closest)
