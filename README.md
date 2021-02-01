@@ -30,3 +30,8 @@ You must register obs-virtualsource.dll in order for pyvirtualcam to open a virt
 in cmd run:
   "regsvr32 /n /i:1 obs-virtualsource.dll" to register dll
   "regsvr32 /u obs-virtualsource.dll" to unregister dll
+
+
+- Goals
+ - train a custom model to improve number recogition
+ - handle forced breakout rooms
