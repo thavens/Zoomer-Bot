@@ -15,9 +15,9 @@ class Webcam:
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 4)
 
     def false_cam(self):
+        frame = np.zeros((self.cam.height, self.cam.width, 4), np.uint8) # RGBA
         while(True):
             while(self.cap.isOpened()):
-                frame = np.zeros((self.cam.height, self.cam.width, 4), np.uint8) # RGBA
                 ret, f = self.cap.read()
                 frame[:,:,:3] = cv2.resize(f, (self.width, self.height), interpolation=None)
                 if ret:

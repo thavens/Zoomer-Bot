@@ -46,7 +46,7 @@ def breakout():
     if breakout:
         print('entered breakout')
         pyautogui.click(breakout)
-        while True():
+        while True:
             time.sleep(30)
             leaveBreakout = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/breakoutLeave.png', grayscale=True, confidence=0.9)
             if leaveBreakout:
@@ -94,14 +94,21 @@ def userCount():
     people = enhancer.enhance(10)
     people.save(os.getcwd() + '/assets/cap.png')
 
-    text = pytesseract.image_to_string(people, lang='eng', config='--psm 7 digits')
+    text = pytesseract.image_to_string(people, lang='eng', config='--psm 7 -c tessedit_char_whitelist=1234567890')
+    #digits')
     try:
         #text = text[:text.index('\n')]
         text = text.strip()
     except:
         print('could not convert to into. value:', text)
 
+
     print('users:', text)
+    try:
+        text = int(text)
+    except:
+        time.sleep(1)
+        return userCount()
     return int(text)
 
 def leave():
@@ -159,8 +166,8 @@ def start(config):
         pyautogui.click(openZoom)
     else:
         print('\033[31;1m# ERROR: no login ID or link was provided\033[0m')
-        sys.exit()
-    
+        #sys.exit()
+
     #bgFound = pyautogui.locateCenterOnScreen(os.getcwd() + '/assets/bg.png', grayscale=True, confidence=0.95)
     #while bgFound is None:
     #    print('locating')
@@ -192,9 +199,12 @@ def start(config):
         if breakout():
             old = None
         count = userCount()
-        print(count, 'users')
         if old != None and old - count > config.thresh:
             print('Users leaving')
-            #leave()
+            leave()
             break
         old = count
+
+if __name__ == '__main__':
+    import config
+    start(config)
