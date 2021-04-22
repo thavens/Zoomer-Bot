@@ -32,6 +32,6 @@ in cmd run:
   "regsvr32 /u obs-virtualsource.dll" to unregister dll
 
 
-- Goals
- - train a custom model to improve number recogition
- - handle forced breakout rooms
+# Future
+ - A solution has most likely been found for the participant count in accuracies. Look forward to more updates soon!!!
+ - 
