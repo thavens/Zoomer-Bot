@@ -33,5 +33,4 @@ in cmd run:
 
 
 # Future
- - A solution has most likely been found for the participant count in accuracies. Look forward to more updates soon!!!
- - 
+ - ZoomBoot1.0 has reached end of life. checkout main instead.
