@@ -45,15 +45,7 @@ print('''\033[36m
                           ``------.
 \033[0m''')
 print('\u001b[33m# WARNING: Please make sure that you have tested your fakeWebCam before starting.\033[0m')
-if not os.path.exists(config.tesseract_path):
-    print('There is something wrong with your tesseract path')
-    sys.exit()
-elif not os.path.exists(config.zoom_path):
-    print('There is something wrong with your zoom path')
-    sys.exit()
 
-print('Tesseract file found')
-print('Zoom app found')
 atexit.register(on_exit)
 inhibit_sleep.inhibit()
 
