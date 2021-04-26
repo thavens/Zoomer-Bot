@@ -4,11 +4,6 @@ import cv2
 
 class Webcam:
     def __init__(self, video_file=0, downscale_factor=1):
-        if(type(video_file).__name__ != 'int'):
-            try:
-                this.excam = cv2.VideoCapture(0)
-            except:
-                0
         self.cap = cv2.VideoCapture(video_file)
         if (self.cap.isOpened() == False):
             print("Error opening video  file")
