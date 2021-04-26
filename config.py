@@ -1,7 +1,7 @@
 import os
 import secret #remove import when using for yourself
 zoom_username = secret.user #replace with zoom account username
-zoom_password = secret.pass #replace with zoom account password
+zoom_password = secret.password #replace with zoom account password
 thresh = 5 #this is at least how many people have to leave in 5 seconds to trigger logout
 
 webcam = False
