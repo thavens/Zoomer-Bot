@@ -1,0 +1,3 @@
+selenium==3.141.0
+PyAutoGUI==0.9.52
+pywin32==227
