@@ -1,15 +1,16 @@
 import pyvirtualcam
 import numpy as np
 import cv2
+import config
 
 class Webcam:
-    def __init__(self, video_file=0, downscale_factor=1):
-        self.cap = cv2.VideoCapture(video_file)
+    def __init__(self):
+        self.cap = cv2.VideoCapture(config.video_file)
         if (self.cap.isOpened() == False):
             print("Error opening video  file")
             sys.stdout.flush()
-        self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)//downscale_factor)
-        self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)//downscale_factor)
+        self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)//config.webcam_downscale_factor)
+        self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)//config.webcam_downscale_factor)
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
         self.cam = pyvirtualcam.Camera(width=self.width, height=self.height, fps=self.fps)
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 4)
